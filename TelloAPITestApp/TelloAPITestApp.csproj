@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\TelloAPI.csproj">
+    <ProjectReference Include="..\TelloAPILib\TelloAPI.csproj">
       <Project>{a5371c19-637d-48f7-9758-eec7518a5757}</Project>
       <Name>TelloAPI</Name>
     </ProjectReference>
