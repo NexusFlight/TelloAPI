@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelloAPITestApp", "TelloAPI\TelloAPITestApp.csproj", "{E1FBE119-3D68-4ECD-AF86-DF2D0CB950BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelloAPI", "ClassLibrary1\TelloAPI.csproj", "{A5371C19-637D-48F7-9758-EEC7518A5757}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelloAPI", "TelloAPILib\TelloAPI.csproj", "{A5371C19-637D-48F7-9758-EEC7518A5757}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
