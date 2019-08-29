@@ -1,0 +1,65 @@
+﻿Summary of commands
+x represents a direction 
+	l = left
+	r = right
+	f = forwards
+	b = back
+	bl = back left
+	rb = back right
+	fl = front left
+	fr = front right
+xx represents a numeric value
+
+Command								Description									Response
+
+*command								Enter Command mode Send First!				OK/ERROR
+*takeoff								Auto Takeoff								OK/ERROR
+*land								Auto Landing								OK/ERROR
+*streamon							Enable Video Stream							OK/ERROR
+*streamoff							Disable Video Stream						OK/ERROR
+*emergency							Stop all motors immediately					OK/ERROR
+*up xx								fly Upward xx(20-500cm)						OK/ERROR
+*down xx								fly Downwards xx(20-500cm)					OK/ERROR
+*left xx								fly Left xx(20-500cm)						OK/ERROR
+*right xx							fly Right xx(20-500cm)						OK/ERROR
+*forward								fly Forwards xx(20-500cm)					OK/ERROR
+*back								fly Backwards xx(20-500cm)					OK/ERROR
+cw xx								Rotate Clockwise xx(1-3600degrees)			OK/ERROR
+ccw xx								Rotate CounterClockWise xx(1-3600degrees)	OK/ERROR
+flip x								flip x direction							OK/ERROR
+go x y z speed						Fly to x y z in cm/s xyz 20-500 s 10-100	OK/ERROR
+
+curve x1 y1 z1 x2 y2 z2 speed		Tello fly a curve defined by the			OK/ERROR
+									current and two given coordinates
+									with speed (cm/s)
+									If the arc radius is not within
+									the range of 0.5-10 meters, it
+									responses false
+									x1, x2: 20-500
+									y1, y2: 20-500
+									z1, z2: 20-500
+									speed: 10-60
+									x/y/z can’t be between -20 – 20 at
+									the same time .									
+
+speed xx							Set Current Speed xx (1-100 cm/s)			OK/ERRORrc a b c d							Send RC control via four channels.			OK/ERROR
+									a: left/right (-100~100)
+									b: forward/backward (-100~100)
+									c: up/down (-100~100)
+									d: yaw (-100~100)wifi ssid pass						set wifi security							OK/ERROR
+
+speed?					get current speed							xx (0-100)
+battery?				get current battery percentage				xx (0-100%)
+time?					get current flight time						xx
+height?
+temp?
+attitude?
+baro?
+acceleration?
+tof?
+wifi?
+
+reset wifi
+Long press Tello for 5 seconds while Tello is on, and the indicator light will turn off and then
+flash yellow. When the indicator light shows a flashing yellow light, the Wi-Fi SSID and password
+will be reset to the factory settings, and there is no password by default
