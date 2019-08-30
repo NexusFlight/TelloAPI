@@ -36,7 +36,7 @@ namespace TelloAPI
 
         }
 
-        public string RecieveData()
+        public string ReceiveData()
         {
             IPEndPoint eP = new IPEndPoint(IPAddress.Any, 8889);
             byte[] bytes = new byte[0];

@@ -33,7 +33,7 @@ namespace TelloAPI
         string SendQuery(string query)
         {
             comms.SendData(query);
-            return comms.RecieveData().ToLower().TrimEnd('\n');
+            return comms.ReceiveData().ToLower().TrimEnd('\n');
         }
 
 
@@ -61,7 +61,7 @@ namespace TelloAPI
         {
             if (SendQuery("takeoff") == "ok" && !commandMode)
             {
-                Console.WriteLine("Take Off Succesfull");
+                Console.WriteLine("Take Off Succesful");
             }
             else
             {
@@ -76,7 +76,7 @@ namespace TelloAPI
         {
             if (SendQuery("land") == "ok" && !commandMode)
             {
-                Console.WriteLine("Landing Succesfull");
+                Console.WriteLine("Landing Succesful");
             }
             else
             {
