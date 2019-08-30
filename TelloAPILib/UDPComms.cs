@@ -16,14 +16,14 @@ namespace TelloAPI
 
 
 
-        public UDPComms() : this(8889)
+        public UDPComms() : this("192.168.10.1",8889)
         {
         }
 
-        public UDPComms(int dronePort)
+        public UDPComms(string ip, int dronePort)
         {
             this.dronePort = dronePort;
-            udpSender = new UdpClient("192.168.1.110", dronePort);
+            udpSender = new UdpClient(ip, dronePort);
             udpReciever = new UdpClient(dronePort);
         }
 
