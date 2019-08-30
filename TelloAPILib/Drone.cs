@@ -292,7 +292,7 @@ namespace TelloAPI
         }
 
         /// <summary>
-        /// Makes the drone rotates counter clockwise 
+        /// Makes the drone rotate counter clockwise 
         /// </summary>
         /// <param name="degrees">1 to 3600 degrees</param>
         public void RotateCounterClockwise(int degrees)
