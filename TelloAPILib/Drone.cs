@@ -9,7 +9,10 @@ namespace TelloAPI
     public class Drone
     {
         UDPComms comms = new UDPComms();
-
+        bool commandMode = false;
+        /// <summary>
+        /// used with flip command to define the flip
+        /// </summary>
         public enum FlipDir {
             left = 0,
             right,
@@ -21,24 +24,29 @@ namespace TelloAPI
             frontRight
         }
 
-        string[] flipDirs = { "l", "r", "f", "b", "bl", "rb", "fl", "fr" };
+        readonly string[] flipDirs = { "l", "r", "f", "b", "bl", "rb", "fl", "fr" };
 
         public Drone()
         {
         }
 
-        string sendQuery(string query)
+        string SendQuery(string query)
         {
             comms.SendData(query);
             return comms.RecieveData().ToLower().TrimEnd('\n');
         }
 
 
-        public void commandMode()
+
+        /// <summary>
+        /// Place drone in command mode. Must be done before any other command
+        /// </summary>
+        public void CommandMode()
         {
-            if (sendQuery("command") == "ok")
+            if (SendQuery("command") == "ok")
             {
                 Console.WriteLine("Command Mode Entered");
+                commandMode = true;
             }
             else
             {
@@ -46,9 +54,12 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Command the drone to launch
+        /// </summary>
         public void TakeOff()
         {
-            if (sendQuery("takeoff") == "ok")
+            if (SendQuery("takeoff") == "ok" && !commandMode)
             {
                 Console.WriteLine("Take Off Succesfull");
             }
@@ -58,9 +69,12 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Command the drone to land
+        /// </summary>
         public void Land()
         {
-            if (sendQuery("land") == "ok")
+            if (SendQuery("land") == "ok" && !commandMode)
             {
                 Console.WriteLine("Landing Succesfull");
             }
@@ -70,9 +84,12 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Activate the drones camera stream. Feature Work In Progress
+        /// </summary>
         public void StreamOn()
         {
-            if (sendQuery("streamon") == "ok")
+            if (SendQuery("streamon") == "ok" && !commandMode)
             {
                 Console.WriteLine("Stream Started");
                 Console.WriteLine("Not fully implemented yet");
@@ -83,9 +100,12 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Deactivate the drones camera stream
+        /// </summary>
         public void StreamOff()
         {
-            if (sendQuery("streamoff") == "ok")
+            if (SendQuery("streamoff") == "ok" && !commandMode)
             {
                 Console.WriteLine("Stream Ended");
             }
@@ -95,9 +115,12 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Emergency Landing, This will cut the motors no matter what.
+        /// </summary>
         public void Emergency()
         {
-            if (sendQuery("emergency") == "ok")
+            if (SendQuery("emergency") == "ok" && !commandMode)
             {
                 Console.WriteLine("Emergency Shutdown Actioned");
             }
@@ -107,11 +130,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Increase the height of the drone
+        /// </summary>
+        /// <param name="height">20 to 500 cm</param>
         public void Up(int height)
         {
             if (height >= 20 && height <= 500)
             {
-                if (sendQuery("up " + height) == "ok")
+                if (SendQuery("up " + height) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Raised " + height + "cm");
                 }
@@ -126,11 +153,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Decrease the height of the drone
+        /// </summary>
+        /// <param name="height">20 to 500 cm</param>
         public void Down(int height)
         {
             if (height >= 20 && height <= 500)
             {
-                if (sendQuery("down " + height) == "ok")
+                if (SendQuery("down " + height) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Raised " + height + "cm");
                 }
@@ -145,11 +176,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Makes the drone fly left
+        /// </summary>
+        /// <param name="distance">20 to 500 cm</param>
         public void Left(int distance)
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (sendQuery("left " + distance) == "ok")
+                if (SendQuery("left " + distance) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Moved Left " + distance + "cm");
                 }
@@ -164,11 +199,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Makes the drone fly right
+        /// </summary>
+        /// <param name="distance">20 to 500 cm</param>
         public void Right(int distance)
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (sendQuery("right " + distance) == "ok")
+                if (SendQuery("right " + distance) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Moved Right " + distance + "cm");
                 }
@@ -183,11 +222,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Makes the drone fly forwards
+        /// </summary>
+        /// <param name="distance">20 to 500 cm</param>
         public void Forwards(int distance)
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (sendQuery("forward " + distance) == "ok")
+                if (SendQuery("forward " + distance) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Moved forward " + distance + "cm");
                 }
@@ -202,11 +245,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Makes the drone fly backwards
+        /// </summary>
+        /// <param name="distance">20 to 500 cm</param>
         public void Backwards(int distance)
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (sendQuery("back " + distance) == "ok")
+                if (SendQuery("back " + distance) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Moved back " + distance + "cm");
                 }
@@ -221,11 +268,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Make the drone rotate clockwise
+        /// </summary>
+        /// <param name="degrees">1 to 3600 degrees</param>
         public void RotateClockwise(int degrees)
         {
-            if (degrees >= 20 && degrees <= 500)
+            if (degrees >= 1 && degrees <= 3600)
             {
-                if (sendQuery("cw " + degrees) == "ok")
+                if (SendQuery("cw " + degrees) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Rotated Clockwise " + degrees + " degrees");
                 }
@@ -240,11 +291,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Makes the drone rotates counter clockwise 
+        /// </summary>
+        /// <param name="degrees">1 to 3600 degrees</param>
         public void RotateCounterClockwise(int degrees)
         {
-            if (degrees >= 20 && degrees <= 500)
+            if (degrees >= 1 && degrees <= 3600)
             {
-                if (sendQuery("ccw " + degrees) == "ok")
+                if (SendQuery("ccw " + degrees) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Rotated Counter Clockwise " + degrees + " degrees");
                 }
@@ -259,9 +314,13 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Makes the drone flip. 
+        /// </summary>
+        /// <param name="flipDir">Use the TelloAPI.FlipDir enum</param>
         public void Flip(FlipDir flipDir)
         {
-            if (sendQuery("flip " + flipDirs[Convert.ToInt32(flipDir)]) == "ok")
+            if (SendQuery("flip " + flipDirs[Convert.ToInt32(flipDir)]) == "ok" && !commandMode)
             {
                 Console.WriteLine("flipped " + flipDir.ToString());
             }
@@ -271,12 +330,18 @@ namespace TelloAPI
             }
         }
 
-
+        /// <summary>
+        /// Makes the drone fly to X Y Z Cordinates at specified speed
+        /// </summary>
+        /// <param name="x">20 to 500</param>
+        /// <param name="y">20 to 500</param>
+        /// <param name="z">20 to 500</param>
+        /// <param name="speed">10 to 100</param>
         public void GoTo(int x, int y, int z, int speed)
         {
             if (x >= 20 && x <= 500 && y >= 20 && y <= 500  && z >= 20 && z <= 500 && speed >= 10 && speed <= 100)
             {
-                if (sendQuery(string.Concat("go ",x," ",y," ",z," ",speed)) == "ok")
+                if (SendQuery(string.Concat("go ",x," ",y," ",z," ",speed)) == "ok" && !commandMode)
                 {
                     Console.WriteLine("Moved to location" + string.Concat("X:", x, " Y:", y, " Z:", z, " Speed:", speed));
                 }
@@ -291,6 +356,23 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Tello fly a curve defined by the
+        /// current and two given coordinates
+        ///with speed(cm/s)
+        ///If the arc radius is not within
+        ///the range of 0.5-10 meters, it
+        ///responses false
+        ///x/y/z can’t be between -20 – 20 at
+        /// the same time.
+        /// </summary>
+        /// <param name="x1">20 to 500</param>
+        /// <param name="y1">20 to 500</param>
+        /// <param name="z1">20 to 500</param>
+        /// <param name="x2">20 to 500</param>
+        /// <param name="y2">20 to 500</param>
+        /// <param name="z2">20 to 500</param>
+        /// <param name="speed">10 to 60</param>
         public void Curve(int x1, int y1, int z1, int x2, int y2, int z2, int speed)
         {
             if (x1 >= 20 && x1 <= 500 && y1 >= 20 && y1 <= 500 && z1 >= 20 && z1 <= 500 && speed >= 10 && speed <= 60)
@@ -298,7 +380,7 @@ namespace TelloAPI
 
                 if (x2 >= 20 && x2 <= 500 && y2 >= 20 && y2 <= 500 && z2 >= 20 && z2 <= 500)
                 {
-                    if (sendQuery(string.Concat("curve ", x1, " ", y1, " ", z1, " ", x2, " ", y2, " ", z2, " ", speed)) == "ok")
+                    if (SendQuery(string.Concat("curve ", x1, " ", y1, " ", z1, " ", x2, " ", y2, " ", z2, " ", speed)) == "ok" && !commandMode)
                     {
                         Console.WriteLine("Curved to location" + string.Concat("X1:", x1, " Y1:", y1, " Z1:", z1, " X2:", x2, " Y2", y2, " Z2", z2, " Speed:", speed));
                     }
@@ -318,13 +400,17 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Sets the drone speed
+        /// </summary>
+        /// <param name="speed">10 to 100</param>
         public void SetSpeed(int speed)
         {
             if (speed >= 10 && speed <= 100)
             {
-                if (sendQuery("speed " + speed) == "ok")
+                if (SendQuery("speed " + speed) == "ok" && !commandMode)
                 {
-                    Console.WriteLine("Set Speed To " + speed + "cm");
+                    Console.WriteLine("Set Speed To " + speed);
                 }
                 else
                 {
@@ -333,15 +419,26 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("speed needs to be between 10 and 100");
+                Console.WriteLine("Speed needs to be between 10 and 100");
             }
         }
 
+        /// <summary>
+        /// Send RC control via four channels.
+        ///lr: left/right(-100~100)
+		///fb: forward/backward(-100~100)
+		///ud: up/down(-100~100)
+		///yaw(-100~100)
+        /// </summary>
+        /// <param name="lr">-100 to 100</param>
+        /// <param name="fb">-100 to 100</param>
+        /// <param name="ud">-100 to 100</param>
+        /// <param name="yaw">-100 to 100</param>
         public void RCCommand(int lr, int fb, int ud, int yaw)
         {
             if (lr >= -100 && lr <= 100 && fb >= -100 && fb <= 100 && ud >= -100 && ud <= 100 && yaw >= -100 && yaw <= 100)
             {
-                if (sendQuery(string.Concat("rc"," ",lr," ",fb," ",ud," ",yaw)) == "ok")
+                if (SendQuery(string.Concat("rc"," ",lr," ",fb," ",ud," ",yaw)) == "ok" && !commandMode)
                 {
                     Console.WriteLine("RC Command to " + string.Concat("Left/Right:", lr, " Forwards/Backwards:", fb, " Up/Down:", ud, " Yaw:", yaw));
                 }
@@ -356,10 +453,15 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// Secures Drones wifi
+        /// </summary>
+        /// <param name="ssid">Id of the drones Wifi hotspot</param>
+        /// <param name="pass">New password for the Wifi hotspot</param>
         public void SecureDrone(string ssid, string pass)
         {
             Land();
-            if (sendQuery("wifi "+ssid+" "+pass) == "ok")
+            if (SendQuery("wifi "+ssid+" "+pass) == "ok" && !commandMode)
             {
                 Console.WriteLine("Secured Drone with SSID:{0} Password:{1} Please Reconnect",ssid,pass);
             }
@@ -369,60 +471,97 @@ namespace TelloAPI
             }
         }
 
+        /// <summary>
+        /// get the speed parameter of the drone
+        /// </summary>
+        /// <returns>speed as an int</returns>
         public int GetSpeed()
         {
-            var speed = sendQuery("speed?");
+            var speed = SendQuery("speed?");
             return Convert.ToInt32(speed);
         }
 
+        /// <summary>
+        /// get the percentage of the battery
+        /// </summary>
+        /// <returns>returns between 100 and 0</returns>
         public int GetBattery()
         {
-            var batt = sendQuery("battery?");
+            var batt = SendQuery("battery?");
             return Convert.ToInt32(batt);
         }
 
+        /// <summary>
+        /// gets flight time
+        /// </summary>
+        /// <returns></returns>
         public string GetTime()
         {
-            return sendQuery("time?");
+            return SendQuery("time?");
         }
 
+        /// <summary>
+        /// get height from starting point
+        /// </summary>
+        /// <returns></returns>
         public int GetHeight()
         {
-            var height = sendQuery("height?");
+            var height = SendQuery("height?");
             return Convert.ToInt32(height);
         }
 
+        /// <summary>
+        /// get temperature
+        /// </summary>
+        /// <returns></returns>
         public int GetTemp()
         {
-            var temp = sendQuery("temp?");
+            var temp = SendQuery("temp?");
             return Convert.ToInt32(temp);
         }
 
+        /// <summary>
+        /// Reports the pitch roll and yaw of the drone
+        /// </summary>
         public void GetAttitude()
         {
-            Console.WriteLine(sendQuery("attitude?"));
+            Console.WriteLine(SendQuery("attitude?"));
         }
 
+        /// <summary>
+        /// get the barometer reading from the drone
+        /// </summary>
+        /// <returns></returns>
         public int GetBaro()
         {
-            var baro = sendQuery("baro?");
+            var baro = SendQuery("baro?");
             return Convert.ToInt32(baro);
         }
 
+        /// <summary>
+        /// reports the acceleration of the drone
+        /// </summary>
         public void GetAcceleration()
         {
-            Console.WriteLine(sendQuery("acceleration?"));
+            Console.WriteLine(SendQuery("acceleration?"));
         }
 
+        /// <summary>
+        /// gets the distance to the floor
+        /// </summary>
+        /// <returns></returns>
         public int GetTof()
         {
-            var tof = sendQuery("tof?");
+            var tof = SendQuery("tof?");
             return Convert.ToInt32(tof);
         }
 
+        /// <summary>
+        /// reports Wifi info
+        /// </summary>
         public void GetWifi()
         {
-            Console.WriteLine(sendQuery("wifi?"));
+            Console.WriteLine(SendQuery("wifi?"));
         }
     }
 
