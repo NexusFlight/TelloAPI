@@ -449,7 +449,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("all inputs are betwwen -100 to 100");
+                Console.WriteLine("All inputs are between -100 to 100");
             }
         }
 
