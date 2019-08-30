@@ -50,7 +50,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Command Mode Error");
             }
         }
 
@@ -65,7 +65,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Take Off Error");
             }
         }
 
@@ -80,7 +80,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Landing Error");
             }
         }
 
@@ -96,7 +96,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Stream On Error");
             }
         }
 
@@ -111,7 +111,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Stream Off Error");
             }
         }
 
@@ -126,7 +126,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Emergency Stop Error");
             }
         }
 
@@ -144,7 +144,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Up Error");
                 }
             }
             else
@@ -163,11 +163,11 @@ namespace TelloAPI
             {
                 if (SendQuery("down " + height) == "ok" && !commandMode)
                 {
-                    Console.WriteLine("Raised " + height + "cm");
+                    Console.WriteLine("Lowered " + height + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Down Error");
                 }
             }
             else
@@ -190,7 +190,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Left Error");
                 }
             }
             else
@@ -213,7 +213,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Right Error");
                 }
             }
             else
@@ -236,7 +236,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Forward Error");
                 }
             }
             else
@@ -259,7 +259,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Backwards Error");
                 }
             }
             else
@@ -282,7 +282,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Rotate Clockwise Error");
                 }
             }
             else
@@ -305,7 +305,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Rotate Counter Clockwise Error");
                 }
             }
             else
@@ -326,7 +326,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Flip Error");
             }
         }
 
@@ -347,7 +347,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Go To Error");
                 }
             }
             else
@@ -386,7 +386,7 @@ namespace TelloAPI
                     }
                     else
                     {
-                        Console.WriteLine("Error");
+                        Console.WriteLine("Curve Error");
                     }
                 }
                 else
@@ -414,7 +414,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("Set Speed Error");
                 }
             }
             else
@@ -444,7 +444,7 @@ namespace TelloAPI
                 }
                 else
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine("RC Command Error");
                 }
             }
             else
@@ -467,7 +467,7 @@ namespace TelloAPI
             }
             else
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Secure Drone Error");
             }
         }
 
