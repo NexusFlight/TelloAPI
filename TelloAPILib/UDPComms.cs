@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace TelloAPI
 {
@@ -13,9 +10,9 @@ namespace TelloAPI
         readonly int dronePort;
         UdpClient udpSender;
         UdpClient udpReciever;
+        IPEndPoint eP;
 
-
-
+        
         public UDPComms() : this("192.168.10.1",8889)
         {
         }
@@ -24,27 +21,23 @@ namespace TelloAPI
         {
             this.dronePort = dronePort;
             udpSender = new UdpClient(ip, dronePort);
-            udpReciever = new UdpClient(dronePort);
+            eP = new IPEndPoint(IPAddress.Any, dronePort);
+            udpReciever = new UdpClient(eP);
         }
 
         public void SendData(string data)
         {
-            
             var dataBytes = Encoding.UTF8.GetBytes(data);
-
             udpSender.Send(dataBytes, dataBytes.Length);
-
         }
 
         public string ReceiveData()
         {
-            IPEndPoint eP = new IPEndPoint(IPAddress.Any, 8889);
             byte[] bytes = new byte[0];
-            while (bytes.Length < 1)
-            {
-                bytes = udpReciever.Receive(ref eP);
-            }
-            return Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+            bytes = udpReciever.Receive(ref eP);
+            var str = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+            return rgx.Replace(str, "").ToLower().TrimEnd('\n');
         }
 
     }

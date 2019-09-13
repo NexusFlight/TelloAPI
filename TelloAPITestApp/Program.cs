@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TelloAPI;
 
-namespace TelloAPI
+namespace TelloAPITestApp
 {
     class Program
     {
         static void Main()
         {
             Drone drone = new Drone();
-            drone.Flip(Drone.FlipDir.backLeft);
+            drone.CommandMode();
+            Console.WriteLine(drone.GetBattery());
+            drone.TakeOff();
+            drone.RotateCounterClockwise(90);
+            drone.Land();
 
         }
     }

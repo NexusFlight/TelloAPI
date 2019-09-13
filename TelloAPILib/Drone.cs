@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TelloAPI
 {
     public class Drone
     {
-        UDPComms comms = new UDPComms();
-        bool commandMode = false;
+        UDPComms comms;
+
         /// <summary>
         /// used with flip command to define the flip
         /// </summary>
-        public enum FlipDir {
+        public enum FlipDir
+        {
             left = 0,
             right,
             forwards,
@@ -28,12 +25,13 @@ namespace TelloAPI
 
         public Drone()
         {
+            comms = new UDPComms();
         }
 
         string SendQuery(string query)
         {
             comms.SendData(query);
-            return comms.ReceiveData().ToLower().TrimEnd('\n');
+            return comms.ReceiveData();
         }
 
 
@@ -43,14 +41,16 @@ namespace TelloAPI
         /// </summary>
         public void CommandMode()
         {
-            if (SendQuery("command") == "ok")
+            var state = SendQuery("command");
+            if(state == "ok")
             {
-                Console.WriteLine("Command Mode Entered");
-                commandMode = true;
+            Console.WriteLine("Command Mode Entered");
+
+
             }
             else
             {
-                Console.WriteLine("Command Mode Error");
+                Console.WriteLine("Command Error "+state);
             }
         }
 
@@ -59,13 +59,14 @@ namespace TelloAPI
         /// </summary>
         public void TakeOff()
         {
-            if (SendQuery("takeoff") == "ok" && !commandMode)
+            var state = SendQuery("takeoff");
+            if (state == "ok")
             {
                 Console.WriteLine("Take Off Succesful");
             }
             else
             {
-                Console.WriteLine("Take Off Error");
+                Console.WriteLine("Take Off Error "+state);
             }
         }
 
@@ -74,13 +75,14 @@ namespace TelloAPI
         /// </summary>
         public void Land()
         {
-            if (SendQuery("land") == "ok" && !commandMode)
+            var state = SendQuery("land");
+            if (state == "ok")
             {
                 Console.WriteLine("Landing Succesful");
             }
             else
             {
-                Console.WriteLine("Landing Error");
+                Console.WriteLine("Landing Error " + state);
             }
         }
 
@@ -89,14 +91,15 @@ namespace TelloAPI
         /// </summary>
         public void StreamOn()
         {
-            if (SendQuery("streamon") == "ok" && !commandMode)
+            var state = SendQuery("streamon");
+            if (state == "ok")
             {
                 Console.WriteLine("Stream Started");
                 Console.WriteLine("Not fully implemented yet");
             }
             else
             {
-                Console.WriteLine("Stream On Error");
+                Console.WriteLine("Stream On Error "+state);
             }
         }
 
@@ -105,13 +108,14 @@ namespace TelloAPI
         /// </summary>
         public void StreamOff()
         {
-            if (SendQuery("streamoff") == "ok" && !commandMode)
+            var state = SendQuery("streamoff");
+            if (state == "ok")
             {
                 Console.WriteLine("Stream Ended");
             }
             else
             {
-                Console.WriteLine("Stream Off Error");
+                Console.WriteLine("Stream Off Error "+state);
             }
         }
 
@@ -120,13 +124,14 @@ namespace TelloAPI
         /// </summary>
         public void Emergency()
         {
-            if (SendQuery("emergency") == "ok" && !commandMode)
+            var state = SendQuery("emergency");
+            if (state == "ok")
             {
                 Console.WriteLine("Emergency Shutdown Actioned");
             }
             else
             {
-                Console.WriteLine("Emergency Stop Error");
+                Console.WriteLine("Emergency Stop Error "+state);
             }
         }
 
@@ -138,13 +143,14 @@ namespace TelloAPI
         {
             if (height >= 20 && height <= 500)
             {
-                if (SendQuery("up " + height) == "ok" && !commandMode)
+                var state = SendQuery("up " + height);
+                if (state == "ok")
                 {
                     Console.WriteLine("Raised " + height + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Up Error");
+                    Console.WriteLine("Up Error " +state);
                 }
             }
             else
@@ -161,13 +167,14 @@ namespace TelloAPI
         {
             if (height >= 20 && height <= 500)
             {
-                if (SendQuery("down " + height) == "ok" && !commandMode)
+                var state = SendQuery("down " + height);
+                if (state == "ok")
                 {
                     Console.WriteLine("Lowered " + height + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Down Error");
+                    Console.WriteLine("Down Error "+state);
                 }
             }
             else
@@ -184,13 +191,14 @@ namespace TelloAPI
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (SendQuery("left " + distance) == "ok" && !commandMode)
+                var state = SendQuery("left " + distance);
+                if (state == "ok")
                 {
                     Console.WriteLine("Moved Left " + distance + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Left Error");
+                    Console.WriteLine("Left Error "+state);
                 }
             }
             else
@@ -207,13 +215,14 @@ namespace TelloAPI
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (SendQuery("right " + distance) == "ok" && !commandMode)
+                var state = SendQuery("right " + distance);
+                if (state == "ok")
                 {
                     Console.WriteLine("Moved Right " + distance + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Right Error");
+                    Console.WriteLine("Right Error "+state);
                 }
             }
             else
@@ -230,13 +239,14 @@ namespace TelloAPI
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (SendQuery("forward " + distance) == "ok" && !commandMode)
+                var state = SendQuery("forward " + distance);
+                if (state == "ok")
                 {
                     Console.WriteLine("Moved forward " + distance + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Forward Error");
+                    Console.WriteLine("Forward Error "+state);
                 }
             }
             else
@@ -253,13 +263,14 @@ namespace TelloAPI
         {
             if (distance >= 20 && distance <= 500)
             {
-                if (SendQuery("back " + distance) == "ok" && !commandMode)
+                var state = SendQuery("back " + distance);
+                if (state == "ok")
                 {
                     Console.WriteLine("Moved back " + distance + "cm");
                 }
                 else
                 {
-                    Console.WriteLine("Backwards Error");
+                    Console.WriteLine("Backwards Error "+state);
                 }
             }
             else
@@ -276,13 +287,14 @@ namespace TelloAPI
         {
             if (degrees >= 1 && degrees <= 3600)
             {
-                if (SendQuery("cw " + degrees) == "ok" && !commandMode)
+                var state = SendQuery("cw " + degrees);
+                if (state == "ok")
                 {
                     Console.WriteLine("Rotated Clockwise " + degrees + " degrees");
                 }
                 else
                 {
-                    Console.WriteLine("Rotate Clockwise Error");
+                    Console.WriteLine("Rotate Clockwise Error "+state);
                 }
             }
             else
@@ -299,13 +311,14 @@ namespace TelloAPI
         {
             if (degrees >= 1 && degrees <= 3600)
             {
-                if (SendQuery("ccw " + degrees) == "ok" && !commandMode)
+                var state = SendQuery("ccw " + degrees);
+                if (state == "ok")
                 {
                     Console.WriteLine("Rotated Counter Clockwise " + degrees + " degrees");
                 }
                 else
                 {
-                    Console.WriteLine("Rotate Counter Clockwise Error");
+                    Console.WriteLine("Rotate Counter Clockwise Error "+state);
                 }
             }
             else
@@ -320,7 +333,8 @@ namespace TelloAPI
         /// <param name="flipDir">Use the TelloAPI.FlipDir enum</param>
         public void Flip(FlipDir flipDir)
         {
-            if (SendQuery("flip " + flipDirs[Convert.ToInt32(flipDir)]) == "ok" && !commandMode)
+            var state = SendQuery("flip " + flipDirs[Convert.ToInt32(flipDir)]);
+            if (state == "ok")
             {
                 Console.WriteLine("flipped " + flipDir.ToString());
             }
@@ -339,15 +353,16 @@ namespace TelloAPI
         /// <param name="speed">10 to 100</param>
         public void GoTo(int x, int y, int z, int speed)
         {
-            if (x >= 20 && x <= 500 && y >= 20 && y <= 500  && z >= 20 && z <= 500 && speed >= 10 && speed <= 100)
+            if (x >= 20 && x <= 500 && y >= 20 && y <= 500 && z >= 20 && z <= 500 && speed >= 10 && speed <= 100)
             {
-                if (SendQuery(string.Concat("go ",x," ",y," ",z," ",speed)) == "ok" && !commandMode)
+                var state = SendQuery(string.Concat("go ", x, " ", y, " ", z, " ", speed));
+                if (state == "ok")
                 {
                     Console.WriteLine("Moved to location" + string.Concat("X:", x, " Y:", y, " Z:", z, " Speed:", speed));
                 }
                 else
                 {
-                    Console.WriteLine("Go To Error");
+                    Console.WriteLine("Go To Error "+state);
                 }
             }
             else
@@ -380,13 +395,14 @@ namespace TelloAPI
 
                 if (x2 >= 20 && x2 <= 500 && y2 >= 20 && y2 <= 500 && z2 >= 20 && z2 <= 500)
                 {
-                    if (SendQuery(string.Concat("curve ", x1, " ", y1, " ", z1, " ", x2, " ", y2, " ", z2, " ", speed)) == "ok" && !commandMode)
+                    var state = SendQuery(string.Concat("curve ", x1, " ", y1, " ", z1, " ", x2, " ", y2, " ", z2, " ", speed));
+                    if (state == "ok")
                     {
                         Console.WriteLine("Curved to location" + string.Concat("X1:", x1, " Y1:", y1, " Z1:", z1, " X2:", x2, " Y2", y2, " Z2", z2, " Speed:", speed));
                     }
                     else
                     {
-                        Console.WriteLine("Curve Error");
+                        Console.WriteLine("Curve Error "+state);
                     }
                 }
                 else
@@ -408,13 +424,14 @@ namespace TelloAPI
         {
             if (speed >= 10 && speed <= 100)
             {
-                if (SendQuery("speed " + speed) == "ok" && !commandMode)
+                var state = SendQuery("speed " + speed);
+                if (state == "ok")
                 {
                     Console.WriteLine("Set Speed To " + speed);
                 }
                 else
                 {
-                    Console.WriteLine("Set Speed Error");
+                    Console.WriteLine("Set Speed Error "+state);
                 }
             }
             else
@@ -438,13 +455,14 @@ namespace TelloAPI
         {
             if (lr >= -100 && lr <= 100 && fb >= -100 && fb <= 100 && ud >= -100 && ud <= 100 && yaw >= -100 && yaw <= 100)
             {
-                if (SendQuery(string.Concat("rc"," ",lr," ",fb," ",ud," ",yaw)) == "ok" && !commandMode)
+                var state = SendQuery(string.Concat("rc", " ", lr, " ", fb, " ", ud, " ", yaw));
+                if (state == "ok")
                 {
                     Console.WriteLine("RC Command to " + string.Concat("Left/Right:", lr, " Forwards/Backwards:", fb, " Up/Down:", ud, " Yaw:", yaw));
                 }
                 else
                 {
-                    Console.WriteLine("RC Command Error");
+                    Console.WriteLine("RC Command Error "+state);
                 }
             }
             else
@@ -461,13 +479,14 @@ namespace TelloAPI
         public void SecureDrone(string ssid, string pass)
         {
             Land();
-            if (SendQuery("wifi "+ssid+" "+pass) == "ok" && !commandMode)
+            var state = SendQuery("wifi " + ssid + " " + pass);
+            if (state == "ok")
             {
-                Console.WriteLine("Secured Drone with SSID:{0} Password:{1} Please Reconnect",ssid,pass);
+                Console.WriteLine("Secured Drone with SSID:{0} Password:{1} Please Reconnect", ssid, pass);
             }
             else
             {
-                Console.WriteLine("Secure Drone Error");
+                Console.WriteLine("Secure Drone Error "+state);
             }
         }
 
