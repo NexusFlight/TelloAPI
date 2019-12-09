@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drone.cs" />
+    <Compile Include="MessageSystem.cs" />
     <Compile Include="UDPComms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

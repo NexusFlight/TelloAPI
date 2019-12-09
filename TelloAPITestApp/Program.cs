@@ -11,7 +11,8 @@ namespace TelloAPITestApp
             drone.CommandMode();
             Console.WriteLine(drone.GetBattery());
             drone.TakeOff();
-            drone.RotateCounterClockwise(90);
+            drone.Up(100);
+            drone.RotateCounterClockwise(180);
             drone.Land();
 
         }

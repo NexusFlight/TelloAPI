@@ -32,7 +32,7 @@ namespace TelloAPI
         {
             comms.SendData(query);
             return comms.ReceiveData();
-        }
+         }
 
 
 
